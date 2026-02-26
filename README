@@ -1,0 +1,38 @@
+Hi
+
+I made it work with Voice Recognition
+
+
+Issue: Seems like PlatformIO doesnt auto-generate srmodels (.pio/build/esp32-s3-devkitc1-n16r8) so I have to do it everytime you clean and build (after building, before flashing) (after remaking the build folder)
+
+Answer: 
+AT THIS LEVEL
+PS C:\Users\mimil\OneDrive\Documents\PlatformIO\Projects\TV_Head_v1> (!! Root of your project !!)
+RUN THIS
+python "C:\Users\mimil\OneDrive\Documents\PlatformIO\Projects\TV_Head_v1\components\esp-sr\model\movemodel.py" `
+    -d1 "C:\Users\mimil\OneDrive\Documents\PlatformIO\Projects\TV_Head_v1\sdkconfig.esp32-s3-devkitc1-n16r8" `
+    -d2 "C:\Users\mimil\OneDrive\Documents\PlatformIO\Projects\TV_Head_v1\components\esp-sr" `
+    -d3 "C:\Users\mimil\OneDrive\Documents\PlatformIO\Projects\TV_Head_v1\.pio\build\esp32-s3-devkitc1-n16r8"
+
+It'll make them from movemodel.py ("d0"), referencing your sdkconfig (d1), using your esp-sr component (d2), and write them (srmodel folder with your language models) in the good folder (d3)
+
+So basically: 
+1- Do your update
+2- Clean
+3- Build
+4- Do the python command above
+5- Flash to board
+6- Serial monitor (and reset board to make it start with the new code obviously)
+
+To add voice commands: (dans le root folder, donc TV_Head_vXXX)
+py -3 "C:\Users\mimil\OneDrive\Documents\PlatformIO\Projects\TV_Head_v1\components\esp-sr\tool\multinet_g2p.py" -t "Cheese;Cake;Christmas Tree, Tree; Christmas Gift, Gift; Flashbang, Think Fast Chucklenuts; Flashlight, Let there be light;Brightness normal; Brightness down; Brightness up; Brightness minimum; Brightness maximum;"
+Basically on utilise l'outil g2p de multinet pour lui faire generer du phonetique qu'on met dans le sdk/menuconfig
+l'exemple en haut return:
+in: Cheese;Cake;Christmas Tree, Tree; Christmas Gift, Gift; Flashbang, Think Fast Chucklenuts; Flashlight, Let there be light;Brightness normal; Brightness down; Brightness up; Brightness minimum; Brightness maximum;
+out: pmZ;KdK;KRgSMcS TRm,TRm;KRgSMcS GgFT,GgFT;FLasBal,vglK FaST KcKLcNcTS;FLasLiT,LfT jfR Bm LiT;BRiTNcS NeRMcL;BRiTNcS DtN;BRiTNcS cP;BRiTNcS MgNcMcM;BRiTNcS MaKScMcM;;
+
+Note to self: If python is wrong again (3.14 instead of 3.13 for example) reinstall, update PATH, and then check the platformio.exe --version to see if Core needs to be re-installed to fit python
+
+To upload data folder: 
+pio run --target buildfs
+pio run --target uploadfs
