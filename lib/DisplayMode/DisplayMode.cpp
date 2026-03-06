@@ -155,8 +155,8 @@ void gyroHappy_Forward() { imageFixe("Fixed_Face_BigSmile"); }
 
 // Variation Heart
 void gyroHeart_Normal() { imageFixe("GyroHeart_Normal"); }
-void gyroHeart_Left() { imageFixe("GyroHeart_SideTilt"); }
-void gyroHeart_Right() { imageFixe("GyroHeart_SideTilt"); } 
+void gyroHeart_Left() { imageFixe("GyroHeart_SideTilts"); }
+void gyroHeart_Right() { imageFixe("GyroHeart_SideTilts"); } 
 void gyroHeart_Forward() { imageFixe("GyroHeart_FrontTilt"); }
 void gyroHeart_Backward() { gif("GyroHeart_Laugh", 4); }
 
